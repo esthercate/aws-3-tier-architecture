@@ -8,6 +8,7 @@ It’s a reference for understanding how networking, compute, and databases work
 ![Architecture](architecture/3-tier.png)
 
 
+
 The solution includes the following components:
 
 - **Web Tier:** EC2 instances in a public subnet, behind an ALB  
@@ -15,9 +16,58 @@ The solution includes the following components:
 - **Database Tier:** Amazon RDS (MariaDB) in private subnets for security and HA  
 - **Supporting Components:**  
   - VPC with public & private subnets across 2 Availability Zones  
-  - Bastion Host for secure SSH access  
   - NAT Gateway for private subnet internet access  
   - Security Groups to control traffic flow
+
+  ## The Three Tiers
+**1. Web (User/Presentation) Tier**
+
+- Purpose: Handles incoming requests from users, serving web pages or APIs.
+
+- Components: EC2 instances running a web server (Apache & PHP), optionally behind an Application Load Balancer (ALB).
+
+- Placement: Public subnet, accessible from the internet.
+
+- Security:
+
+ - HTTP/HTTPS traffic allowed from anywhere
+
+ - SSH access only via Bastion Host
+
+Key Idea: The “front door” of your application — directly interacts with users and forwards requests to the application tier.
+
+**2. Application (Logic) Tier**
+
+- Purpose: Processes business logic, handles requests from the web tier, and communicates with the database.
+
+- Components: EC2 instances running the application backend.
+
+- Placement: Private subnet (no direct internet access).
+
+- Security:
+
+ - Receives requests only from the Web Tier
+
+ - Connects to the Database Tier
+
+
+Key Idea: The “brain” of your system, separating business logic from the user-facing layer for security, scalability, and manageability.
+
+**3. Database (Data) Tier**
+
+- Purpose: Stores and manages persistent application data.
+
+- Components: Amazon RDS (MariaDB) instances deployed in private subnets.
+
+- Placement: Private subnets, optionally across multiple Availability Zones for high availability.
+
+- Security:
+
+ - Accessible only from the Application Tier
+
+ - No direct internet access
+
+Key Idea: The “data backbone” of your application — keeps information secure, consistent, and highly available.
 
 ## Quick Setup Overview
 
