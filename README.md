@@ -18,3 +18,9 @@ The solution includes the following components:
 
 ## Quick Setup Overview
 
+1. **VPC & Subnets:** 1 public, 3 private across 2 AZs  
+2. **Internet & NAT Gateways:** IGW attached to VPC; NAT Gateway in public subnet  
+3. **Route Tables:** Public routes → IGW, Private routes → NAT Gateway  
+4. **Security Groups:** Web, App, Database  
+5. **Servers:** Launch EC2 instances via console, configure user data for web & app servers  
+6. **Database:** RDS MariaDB in private subnets  
