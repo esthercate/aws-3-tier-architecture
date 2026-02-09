@@ -10,11 +10,14 @@ It’s a reference for understanding how networking, compute, and databases work
 
 The solution includes the following components:
 
-- Web Tier (Apache)
-- Application Tier (App server)
-- Database Tier (Amazon RDS MariaDB)
-- Security and networking (VPC, subnets, route tables, security groups)
-- Auto Scaling Groups and Launch Templates
+- **Web Tier:** EC2 instances in a public subnet, behind an ALB  
+- **Application Tier:** EC2 instances in a private subnet  
+- **Database Tier:** Amazon RDS (MariaDB) in private subnets for security and HA  
+- **Supporting Components:**  
+  - VPC with public & private subnets across 2 Availability Zones  
+  - Bastion Host for secure SSH access  
+  - NAT Gateway for private subnet internet access  
+  - Security Groups to control traffic flow
 
 ## Quick Setup Overview
 
@@ -24,3 +27,11 @@ The solution includes the following components:
 4. **Security Groups:** Web, App, Database  
 5. **Servers:** Launch EC2 instances via console, configure user data for web & app servers  
 6. **Database:** RDS MariaDB in private subnets  
+
+## References
+
+For a detailed step-by-step walkthrough with screenshots, see my [blog post](https://medium.com/@vuthi.esther/a-simple-guide-to-building-a-highly-available-3-tier-architecture-on-aws-72b9d1bf2988)
+
+## License
+
+This project is licensed under the MIT License.
